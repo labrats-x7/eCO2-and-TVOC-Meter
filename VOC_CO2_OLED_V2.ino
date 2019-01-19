@@ -78,19 +78,41 @@ void loop() {
       display.setTextSize(1);             // Normal 1:1 pixel scale
       display.setTextColor(WHITE);        // Draw white text
       display.setCursor(13,0);
-      display.println(F("eCO2 & TVOC Meter"));
-      display.setCursor(0,23);           
+      display.print(F("eCO2 & TVOC Meter"));
+      display.setCursor(0,12);
+      display.print(F("Quali:"));
+      display.setTextSize(2);
+      if(ccs.geteCO2()<800){
+        display.print(F("gut"));
+      }
+      if(ccs.geteCO2()>=800 && ccs.geteCO2()<1000){
+        display.print(F("mittel"));
+      }
+      if(ccs.geteCO2()>=1000 && ccs.geteCO2()<1400){
+        display.print(F("minder"));
+      }
+      if(ccs.geteCO2()>=1400 && ccs.geteCO2()<2400){
+        display.print(F("lausig"));
+      }
+      if(ccs.geteCO2()>=2400 && ccs.geteCO2()<3500){
+        display.print(F("ACHTUNG"));
+      }  
+      if(ccs.geteCO2()>=3500){
+        display.print(F("GEFAHR!"));
+      } 
+      display.setTextSize(1);
+      display.setCursor(0,31);           
       display.print(F("eCO2: "));
       display.setTextSize(2);
       display.print(ccs.geteCO2());
       display.println(F("ppm"));
       display.setTextSize(1);
-      display.setCursor(0,47);           
+      display.setCursor(0,49);           
       display.print(F("TVOC: "));
       display.setTextSize(2);
       display.print(ccs.getTVOC());
       display.println(F("ppb"));
-      if(ccs.geteCO2()>1500){
+      if(ccs.geteCO2()>1400){
         display.invertDisplay(true);
       }
       else{
@@ -111,7 +133,6 @@ void loop() {
   delay(500);
   }
 }
-
 
 void fillroundrect(void) {
   display.clearDisplay();
